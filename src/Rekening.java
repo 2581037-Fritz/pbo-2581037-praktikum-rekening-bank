@@ -1,10 +1,8 @@
 public class Rekening {
-    // Field nomor, pemilik, dan saldo semuanya private
     private String nomor;
     private String pemilik;
     private int saldo;
 
-    // Constructor diisi memakai this
     public Rekening(String nomor, String pemilik, int saldo) {
         this.nomor = nomor;
         this.pemilik = pemilik;
@@ -13,7 +11,29 @@ public class Rekening {
 
     public String getNomor() { return nomor; }
     public String getPemilik() { return pemilik; }
-
-    // Saldo read-only (hanya ada get, tidak ada set)
     public int getSaldo() { return saldo; }
+
+    // Method setor menolak jumlah <= 0
+    public boolean setor(int jumlah) {
+        if (jumlah <= 0) return false;
+        saldo += jumlah;
+        return true;
+    }
+
+    // Method tarik menolak jumlah <= 0 dan melebihi saldo
+    public boolean tarik(int jumlah) {
+        if (jumlah <= 0 || jumlah > saldo) return false;
+        saldo -= jumlah;
+        return true;
+    }
+
+    // Uang diformat sebagai method private
+    private String formatRupiah(int uang) {
+        return String.format("Rp%,d", uang).replace(',', '.');
+    }
+
+    // Mencetak satu baris info
+    public void cetakInfo() {
+        System.out.println(nomor + " | " + pemilik + " | " + formatRupiah(saldo));
+    }
 }
